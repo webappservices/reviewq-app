@@ -21,9 +21,9 @@ platforms/android:
 	ionic cordova platform add android
 
 # Build and launch in xcode
-xcode: dev buildnumbers platforms/ios
+xcode: dev platforms/ios
 	ionic cordova build ios --prod
-	open -a XCode platforms/ios/QSurve.xcodeproj
+	open -a XCode platforms/ios/ReviewQ.xcodeproj
 
 # Build and launch in Android studio
 android-studio: dev buildnumbers platforms/android
