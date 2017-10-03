@@ -25,10 +25,10 @@ export class UserdataService {
       if (username) {
         this.username = username;
         console.log('Resuming as user: ' + this.username);
-        this.events.publish('user:resume', this.username);
         //this.ui.presentToast('Logged in as ' + this.username);
         this.storage.get('usertoken').then((token) => {
           this.usertoken = token;
+          this.events.publish('user:resume', this.username);
         });
       }
     });
@@ -56,6 +56,7 @@ export class UserdataService {
         this.storage.set('username', login);
         this.usertoken = token;
         this.storage.set('usertoken', token);
+        this.events.publish('user:login', this.username);
       },
       err => {
         console.log('Error validating token');
@@ -65,11 +66,13 @@ export class UserdataService {
       );
   }
 
-  _getAuthOptions(app_user?: boolean): RequestOptions {
+  getAuthOptions(app_user?: boolean): RequestOptions {
     let token = this.usertoken;
     /* Generate auth headers for API requests */
-    let headers = new Headers(
-      { 'Authorization': 'Token ' + token });
+    let headers = new Headers({
+      'Authorization': 'Bearer ' + token,
+      'Accept': 'application/json'
+    });
     let options = new RequestOptions({ headers: headers });
     return options;
   }

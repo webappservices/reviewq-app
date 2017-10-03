@@ -8,19 +8,17 @@
 
 <ion-content padding>
 
+  <ion-list *ngIf="userdata.username">
+    <ion-item *ngFor="let item of items">
+      {{ item.title }}
+    </ion-item>
+  </ion-list>
+
+
   <form #loginCreds="ngForm"
         *ngIf="!userdata.username"
         (ngSubmit)="login(loginCreds.value)">
     <ion-list>
-      <!--
-      <ion-item>
-        <ion-label color="primary"
-                   stacked>Plone URL</ion-label>
-        <ion-input type="text" name="ploneurl" ngModel
-                   autocapitalize="off">
-        </ion-input>
-      </ion-item>
-      -->
       <ion-item>
         <ion-label color="primary"
                    stacked>Username</ion-label>
@@ -43,13 +41,18 @@
 
   </form>
 
-    <div padding *ngIf="userdata.username">
-      <button
-         ion-button type="submit" block
-         (click)="logout()">
-        Log out
-      </button>
-    </div>
+  <ion-refresher (ionRefresh)="doRefresh($event)"
+                 *ngIf="userdata.username">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div padding *ngIf="userdata.username">
+    <button
+       ion-button type="submit" block
+       (click)="logout()">
+      Log out
+    </button>
+  </div>
 
 
 </ion-content>

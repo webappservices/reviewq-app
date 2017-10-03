@@ -10,6 +10,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 
 import { UserdataService } from '../providers/userdata';
+import { PloneService } from '../providers/plone';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { UserdataService } from '../providers/userdata';
     SplashScreen,
     HttpModule,
     UserdataService,
+    PloneService,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
