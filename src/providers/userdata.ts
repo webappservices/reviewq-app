@@ -1,4 +1,3 @@
-import { Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
@@ -11,7 +10,6 @@ export class UserdataService {
   public usertoken: string;
 
   constructor(
-    private platform: Platform,
     public http: Http,
     public events: Events,
     public storage: Storage
@@ -36,32 +34,32 @@ export class UserdataService {
     });
   }
 
-  login(ploneurl: string, email: string, token: string) {
-    /* Attempt login with email and OTA */
-    console.log('Login attempt: ' + email);
+  login(ploneurl: string, login: string, password: string) {
+    /* Attempt login with login and pw */
+    console.log('Login attempt: ' + login);
     //this.ui.showLoading('Logging in');
 
-    let options = this._getAuthOptions(true);
+    let headers = new Headers({
+      'Accept': 'application/json'
+    });
+    let options = new RequestOptions({ headers: headers });
     this.http.post(
-      ploneurl + '@@login',
-      { email, token },
+      ploneurl + '/@login',
+      { login, password },
       options
     ).subscribe(
       data => {
         console.log('Login success');
         let token = data.json().token;
         console.log('Got auth token: ' + token);
+        this.username = login;
+        this.storage.set('username', login);
         this.usertoken = token;
         this.storage.set('usertoken', token);
-        this.sync(true);
       },
       err => {
         console.log('Error validating token');
-        //this.ui.hideLoading().then(() => {
-        //  this.ui.showAlert(
-        //    'Token Error',
-        //    'The token you entered is invalid.');
-        //});
+        console.error(err);
       },
       () => console.log('Login attempt complete')
       );
@@ -80,7 +78,6 @@ export class UserdataService {
     console.log('Logout');
     this.username = '';
     this.storage.remove('username');
-    this.storage.remove('userdetails')
     this.usertoken = '';
     this.storage.remove('usertoken');
     this.events.publish('user:logout', this.username);

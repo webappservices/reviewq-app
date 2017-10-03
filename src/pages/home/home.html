@@ -7,5 +7,49 @@
 </ion-header>
 
 <ion-content padding>
-  Welcome
+
+  <form #loginCreds="ngForm"
+        *ngIf="!userdata.username"
+        (ngSubmit)="login(loginCreds.value)">
+    <ion-list>
+      <!--
+      <ion-item>
+        <ion-label color="primary"
+                   stacked>Plone URL</ion-label>
+        <ion-input type="text" name="ploneurl" ngModel
+                   autocapitalize="off">
+        </ion-input>
+      </ion-item>
+      -->
+      <ion-item>
+        <ion-label color="primary"
+                   stacked>Username</ion-label>
+        <ion-input type="text" name="username" ngModel
+                   autocapitalize="off"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary"
+                   stacked>Password</ion-label>
+        <ion-input type="password" name="password" ngModel
+                   autocapitalize="off"></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <div padding>
+      <button
+         ion-button type="submit" block
+         [disabled]="!(loginCreds.value.username && loginCreds.value.password)">Login</button>
+    </div>
+
+  </form>
+
+    <div padding *ngIf="userdata.username">
+      <button
+         ion-button type="submit" block
+         (click)="logout()">
+        Log out
+      </button>
+    </div>
+
+
 </ion-content>
