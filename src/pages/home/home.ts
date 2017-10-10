@@ -31,9 +31,9 @@ export class HomePage {
     console.log(creds);
     if (creds.username && creds.password) {
       this.userdata.login(
-        'http://localhost:8080/Plone',
+        creds.ploneurl,
         creds.username,
-        creds.password
+        creds.password,
       );
     }
   }

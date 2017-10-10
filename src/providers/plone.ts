@@ -18,10 +18,10 @@ export class PloneService {
       state = 'pending';
     }
     let options = this.userdata.getAuthOptions();
-    let ploneurl = 'http://localhost:8080/Plone';
+    let catalog_url = this.userdata.ploneurl + '/@search?sort_on=created&sort_order=reverse&review_state=' + state;
     return new Promise(resolve => {
       this.http.get(
-        ploneurl + '/@search?sort_on=created&sort_order=reverse&review_state=' + state,
+        catalog_url,
         options
       ).subscribe(
         data => {

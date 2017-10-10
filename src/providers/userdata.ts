@@ -8,6 +8,7 @@ export class UserdataService {
 
   public username: string;
   public usertoken: string;
+  public ploneurl: string;
 
   constructor(
     public http: Http,
@@ -15,29 +16,49 @@ export class UserdataService {
     public storage: Storage
   ) {
     storage.ready().then(() => {
-      this._load();
+      this._loadAll();
     });
   }
 
-  _load() {
-    // Load saved data back into local vars
-    return this.storage.get('username').then((username) => {
+  _loadAll() {
+    // Load all saved data back into local vars
+    this._load('username').then((username) => {
       if (username) {
         this.username = username;
-        console.log('Resuming as user: ' + this.username);
-        //this.ui.presentToast('Logged in as ' + this.username);
-        this.storage.get('usertoken').then((token) => {
-          this.usertoken = token;
-          this.events.publish('user:resume', this.username);
-        });
+        this._load('usertoken')
+          .then(() => {
+            return this._load('ploneurl');
+          }).then(() => {
+            console.log('Resuming as user: ' + this.username);
+            this.events.publish('user:resume', this.username);
+          });
+      } else {
+        // else we have no saved data
+        console.log('No saved user data found');
       }
     });
+  }
+
+  _load(propname: string): Promise<string> {
+    // Load a property from device storage into local var
+    console.log('Loading: ' + propname);
+    return this.storage.get(propname).then((value) => {
+      this[propname] = value;
+      return value;
+    })
+  }
+
+  _store(propname: string, val: string) {
+    // Store a value in local variables
+    // as well as device storage
+    console.log('Storing: ' + propname);
+    this[propname] = val;
+    this.storage.set(propname, val);
   }
 
   login(ploneurl: string, login: string, password: string) {
     /* Attempt login with login and pw */
     console.log('Login attempt: ' + login);
-    //this.ui.showLoading('Logging in');
 
     let headers = new Headers({
       'Accept': 'application/json'
@@ -52,10 +73,9 @@ export class UserdataService {
         console.log('Login success');
         let token = data.json().token;
         console.log('Got auth token: ' + token);
-        this.username = login;
-        this.storage.set('username', login);
-        this.usertoken = token;
-        this.storage.set('usertoken', token);
+        this._store('username', login);
+        this._store('usertoken', token);
+        this._store('ploneurl', ploneurl);
         this.events.publish('user:login', this.username);
       },
       err => {
