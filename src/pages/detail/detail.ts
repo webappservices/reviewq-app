@@ -23,18 +23,21 @@ export class DetailPage {
 
   accept() {
     // Publish the item
-    this.plone.transition(this.item, 'publish');
+    this.plone.transition(this.item, 'publish').then(() => {
+      this.events.publish('item:changed', this.item);
+    });
     this.close();
   }
 
   reject() {
     // Send the item back
-    this.plone.transition(this.item, 'reject');
+    this.plone.transition(this.item, 'reject').then(() => {
+      this.events.publish('item:changed', this.item);
+    });
     this.close();
   }
 
   close() {
-    this.events.publish('item:changed', this.item);
     this.navCtrl.pop();
   }
 
