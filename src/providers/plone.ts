@@ -62,9 +62,9 @@ export class PloneService {
     let options = this.userdata.getAuthOptions();
     let url = item['@id'];
     return new Promise(resolve => {
-      this.http.get(
-        //url + '/@workflow/' + transition_name,
-        url + '/@workflow',
+      this.http.post(
+        url + '/@workflow/' + transition_name,
+        {},
         options
       ).subscribe(
         data => {
