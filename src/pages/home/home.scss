@@ -1,3 +1,11 @@
 page-home {
-
+  ion-header .toolbar-background {
+    background-color: #29ABE2 !important;
+    }
+  ion-title .toolbar-title {
+    color: #fff !important;
+    }
+  ion-content {
+    background-color: #95D6F1 !important;
+    }
 }

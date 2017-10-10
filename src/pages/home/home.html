@@ -3,35 +3,42 @@
     <ion-title>
       ReviewQ
     </ion-title>
+    <ion-buttons end>
+      <button
+         *ngIf="userdata.username"
+         icon-only
+         ion-button
+         (click)="logout()">
+        <ion-icon name="exit" color="light"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
 
-  <ion-list *ngIf="userdata.username">
-    <ion-item *ngFor="let item of items">
-      {{ item.title }}
-    </ion-item>
-  </ion-list>
-
-
+  <!-- Login form -->
   <form #loginCreds="ngForm"
         *ngIf="!userdata.username"
         (ngSubmit)="login(loginCreds.value)">
-    <ion-list>
-      <ion-item>
-        <ion-label color="primary"
-                   stacked>Username</ion-label>
-        <ion-input type="text" name="username" ngModel
-                   autocapitalize="off"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label color="primary"
-                   stacked>Password</ion-label>
-        <ion-input type="password" name="password" ngModel
-                   autocapitalize="off"></ion-input>
-      </ion-item>
-    </ion-list>
+    <ion-item>
+      <ion-label color="primary"
+                 floating>Plone URL</ion-label>
+      <ion-input type="text" name="ploneurl" ngModel
+                 autocapitalize="off"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary"
+                 floating>Username</ion-label>
+      <ion-input type="text" name="username" ngModel
+                 autocapitalize="off"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary"
+                 floating>Password</ion-label>
+      <ion-input type="password" name="password" ngModel
+                 autocapitalize="off"></ion-input>
+    </ion-item>
 
     <div padding>
       <button
@@ -40,19 +47,27 @@
     </div>
 
   </form>
+  <!-- End login form -->
 
+  <!-- Pull to refresh -->
   <ion-refresher (ionRefresh)="doRefresh($event)"
                  *ngIf="userdata.username">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div padding *ngIf="userdata.username">
-    <button
-       ion-button type="submit" block
-       (click)="logout()">
-      Log out
-    </button>
+  <!-- Logged in listing -->
+  <div *ngIf="userdata.username">
+    <ion-card *ngFor="let item of items">
+      <ion-card-header>
+        {{ item.title }}
+      </ion-card-header>
+      <ion-card-content *ngIf="item.description">
+        <p>
+          {{ item.description }}
+        </p>
+      </ion-card-content>
+    </ion-card>
   </div>
-
+  <!-- End listing -->
 
 </ion-content>
