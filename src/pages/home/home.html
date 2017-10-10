@@ -23,13 +23,14 @@
         (ngSubmit)="login(loginCreds.value)">
     <ion-card>
       <ion-card-header>
-        Login
+        Login to Plone
       </ion-card-header>
     <ion-item>
       <ion-label color="primary"
-                 stacked>Plone URL</ion-label>
+                 stacked>Plone Site URL</ion-label>
       <ion-input type="text" name="ploneurl" ngModel
-                 autocapitalize="off"></ion-input>
+                 autocapitalize="off"
+                 placeholder="https://"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary"
