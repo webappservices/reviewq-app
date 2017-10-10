@@ -5,6 +5,8 @@ Plone Review Queue App.
 
 Powered by `Ionic`_ (+ `Angular 2`_)
 
+Requires plone.restapi_ to be installed in your Plone site.
+
 Prerequisites
 =============
 
@@ -70,3 +72,4 @@ Installation
 .. _`Node Version Manager`: https://github.com/creationix/nvm
 .. _Yarn: https://yarnpkg.com/en/
 .. _`Apache Cordova`: https://cordova.apache.org/
+.. _plone.restapi: http://plonerestapi.readthedocs.io/
