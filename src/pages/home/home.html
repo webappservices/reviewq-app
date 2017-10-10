@@ -62,7 +62,8 @@
 
   <!-- Logged in listing -->
   <div *ngIf="userdata.username">
-    <ion-card *ngFor="let item of items" tappable>
+    <ion-card *ngFor="let item of items" tappable
+              (click)="selectItem(item)">
       <ion-card-header>
         {{ item.title }}
       </ion-card-header>

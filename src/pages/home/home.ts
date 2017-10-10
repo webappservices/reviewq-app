@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Events } from 'ionic-angular';
 
+import { DetailPage } from '../detail/detail';
+
 import { UserdataService } from '../../providers/userdata';
 import { PloneService } from '../../providers/plone';
 
@@ -19,15 +21,22 @@ export class HomePage {
     public plone: PloneService,
     public events: Events,
   ) {
+    // Refresh on login
     events.subscribe('user:login', (userEventData) => {
       this.refresh();
     });
+    // Refresh on resume
     events.subscribe('user:resume', (userEventData) => {
+      this.refresh();
+    });
+    // Refresh on state change
+    events.subscribe('item:changed', (item) => {
       this.refresh();
     });
   }
 
   login(creds) {
+    // Log in via the userdata service
     console.log(creds);
     if (creds.username && creds.password) {
       this.userdata.login(
@@ -39,10 +48,12 @@ export class HomePage {
   }
 
   logout() {
+    // Logout
     this.userdata.logout();
   }
 
   refresh() {
+    // Refresh listing
     console.log('Refreshing...');
     return this.plone.getItems().then((items) => {
       this.items = items;
@@ -50,11 +61,17 @@ export class HomePage {
   }
 
   doRefresh(refresher) {
-    // Called from the UI
+    // Called from the UI refresher
     this.refresh().then(() => {
       refresher.complete();
     }, (err) => {
       refresher.complete();
+    });
+  }
+
+  selectItem(item) {
+    this.plone.getDetail(item).then((fullitem) => {
+      this.navCtrl.push(DetailPage, { item: fullitem });
     });
   }
 

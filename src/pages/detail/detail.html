@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title *ngIf="item">
+      Detail
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <h1>{{ item.title }}</h1>
+
+  <p *ngIf="item.description" class="description">
+    <em>{{ item.description }}</em>
+  </p>
+
+  <div [innerHTML]="item.text.data"></div>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col col-6>
+        <button ion-button color="secondary" block icon-left
+                (click)="accept()">
+          <ion-icon name="checkmark"></ion-icon>Accept
+        </button>
+      </ion-col>
+      <ion-col col-6>
+        <button ion-button color="danger" block icon-left
+                (click)="reject()">
+          <ion-icon name="close"></ion-icon>Reject
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
