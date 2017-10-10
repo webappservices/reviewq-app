@@ -21,21 +21,25 @@
   <form #loginCreds="ngForm"
         *ngIf="!userdata.username"
         (ngSubmit)="login(loginCreds.value)">
+    <ion-card>
+      <ion-card-header>
+        Login
+      </ion-card-header>
     <ion-item>
       <ion-label color="primary"
-                 floating>Plone URL</ion-label>
+                 stacked>Plone URL</ion-label>
       <ion-input type="text" name="ploneurl" ngModel
                  autocapitalize="off"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary"
-                 floating>Username</ion-label>
+                 stacked>Username</ion-label>
       <ion-input type="text" name="username" ngModel
                  autocapitalize="off"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary"
-                 floating>Password</ion-label>
+                 stacked>Password</ion-label>
       <ion-input type="password" name="password" ngModel
                  autocapitalize="off"></ion-input>
     </ion-item>
@@ -45,6 +49,7 @@
          ion-button type="submit" block
          [disabled]="!(loginCreds.value.username && loginCreds.value.password)">Login</button>
     </div>
+    </ion-card>
 
   </form>
   <!-- End login form -->
@@ -57,7 +62,7 @@
 
   <!-- Logged in listing -->
   <div *ngIf="userdata.username">
-    <ion-card *ngFor="let item of items">
+    <ion-card *ngFor="let item of items" tappable>
       <ion-card-header>
         {{ item.title }}
       </ion-card-header>
