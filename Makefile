@@ -26,7 +26,7 @@ xcode: dev platforms/ios
 	open -a XCode platforms/ios/ReviewQ.xcodeproj
 
 # Build and launch in Android studio
-android-studio: dev buildnumbers platforms/android
+android-studio: dev platforms/android
 	ionic cordova build android --prod
 	open -a "Android Studio" platforms/android
 
