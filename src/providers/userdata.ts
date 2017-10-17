@@ -1,7 +1,7 @@
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
-import { Events } from 'ionic-angular';
+import { Events, AlertController } from 'ionic-angular';
 
 @Injectable()
 export class UserdataService {
@@ -13,6 +13,7 @@ export class UserdataService {
   constructor(
     public http: Http,
     public events: Events,
+    public alertCtrl: AlertController,
     public storage: Storage
   ) {
     storage.ready().then(() => {
@@ -56,6 +57,16 @@ export class UserdataService {
     this.storage.set(propname, val);
   }
 
+  showAlert(title: string, message: string) {
+    /* Show alert confirmation */
+    let alert = this.alertCtrl.create({
+      title: title,
+      subTitle: message,
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
   login(ploneurl: string, login: string, password: string) {
     /* Attempt login with login and pw */
     console.log('Login attempt: ' + login);
@@ -81,6 +92,12 @@ export class UserdataService {
       err => {
         console.log('Error validating token');
         console.error(err);
+        if (err.status == 0) {
+          console.log('Could not connect to plone site');
+          this.showAlert('Connection Error', 'Could not connect to plone site');
+        } else {
+          this.showAlert('Login Error', err.statusText);
+        }
       },
       () => console.log('Login attempt complete')
       );
