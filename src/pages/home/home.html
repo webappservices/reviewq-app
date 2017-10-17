@@ -78,10 +78,8 @@
   <!-- End listing -->
 
   <!-- no items -->
-  <ion-card *ngIf="userdata.username && !items.length">
-    <ion-card-content>
-      <em>There are no items for you to review.</em>
-    </ion-card-content>
-  </ion-card>
+  <p padding *ngIf="userdata.username && !items.length">
+    <em>There are no items for you to review.</em>
+  </p>
 
 </ion-content>
