@@ -7,6 +7,28 @@ Powered by `Ionic`_ (+ `Angular 2`_)
 
 Requires plone.restapi_ to be installed in your Plone site.
 
+Plone site setup
+================
+
+* Add plone.restapi_ to your eggs, and install the profile in control panel
+
+* Configure CORS to allow the app to talk to your site:
+
+  .. code: xml
+
+    <configure
+        xmlns:plone="http://namespaces.plone.org/plone">
+      <plone:CORSPolicy
+        allow_origin="*"
+        allow_methods="GET,POST,OPTIONS"
+        allow_credentials="true"
+        expose_headers="Content-Length,Access-Control-Allow-Origin"
+        allow_headers="Accept,Authorization,Content-Type"
+        max_age="3600"
+      />
+    </configure>
+
+
 Prerequisites
 =============
 
