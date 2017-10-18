@@ -24,7 +24,7 @@ export class DetailPage {
   accept() {
     // Publish the item
     this.plone.transition(this.item, 'publish').then(() => {
-      this.events.publish('item:changed', this.item);
+      this.events.publish('item:changed', 'accepted');
     });
     this.close();
   }
@@ -32,7 +32,7 @@ export class DetailPage {
   reject() {
     // Send the item back
     this.plone.transition(this.item, 'reject').then(() => {
-      this.events.publish('item:changed', this.item);
+      this.events.publish('item:changed', 'rejected');
     });
     this.close();
   }

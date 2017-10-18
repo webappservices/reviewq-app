@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { Events } from 'ionic-angular';
+import { Events, ToastController } from 'ionic-angular';
 
 import { DetailPage } from '../detail/detail';
 
@@ -20,9 +20,11 @@ export class HomePage {
     public userdata: UserdataService,
     public plone: PloneService,
     public events: Events,
+    public toastCtrl: ToastController,
   ) {
     // Refresh on login
     events.subscribe('user:login', (userEventData) => {
+      this.presentToast('Logged in');
       this.refresh();
     });
     // Refresh on resume
@@ -30,9 +32,18 @@ export class HomePage {
       this.refresh();
     });
     // Refresh on state change
-    events.subscribe('item:changed', (item) => {
+    events.subscribe('item:changed', (transition) => {
+      this.presentToast('Item ' + transition);
       this.refresh();
     });
+  }
+
+  presentToast(message: string) {
+    this.toastCtrl.create({
+      message: message,
+      position: 'top',
+      duration: 1500
+    }).present();
   }
 
   login(creds) {
