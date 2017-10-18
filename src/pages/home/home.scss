@@ -14,4 +14,14 @@ page-home {
   ion-card, ion-item {
     background-color: #fafafa !important;
     }
+  #done {
+     text-align: center;
+     color: #555;
+     p.large {
+       font-size: 2em;
+     }
+     ion-icon {
+       font-size: 8em;
+     }
+   }
 }
