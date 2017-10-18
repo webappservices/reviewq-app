@@ -14,7 +14,7 @@ Plone site setup
 
 * Configure CORS to allow the app to talk to your site:
 
-  .. code: xml
+  .. code:: xml
 
     <configure
         xmlns:plone="http://namespaces.plone.org/plone">
