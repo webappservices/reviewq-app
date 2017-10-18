@@ -19,7 +19,7 @@ export class PloneService {
       state = 'pending';
     }
     let options = this.userdata.getAuthOptions();
-    let catalog_url = this.userdata.ploneurl + '/@search?sort_on=created&sort_order=reverse&metadata_fields=UID&review_state=' + state;
+    let catalog_url = this.userdata.ploneurl + '/@search?sort_on=created&sort_order=reverse&metadata_fields=_all&review_state=' + state;
     return new Promise(resolve => {
       this.http.get(
         catalog_url,

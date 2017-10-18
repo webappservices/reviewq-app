@@ -5,6 +5,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { MomentModule } from 'angular2-moment';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -21,6 +22,7 @@ import { PloneService } from '../providers/plone';
   ],
   imports: [
     BrowserModule,
+    MomentModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
