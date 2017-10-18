@@ -25,10 +25,17 @@ xcode: dev platforms/ios
 	ionic cordova build ios --prod
 	open -a XCode platforms/ios/ReviewQ.xcodeproj
 
-# Build and launch in Android studio
-android-studio: dev platforms/android
+# Build for android
+android: dev platforms/android
 	ionic cordova build android --prod
+
+# Build and launch in Android studio
+android-studio: android
 	open -a "Android Studio" platforms/android
+
+# Build and launch on android device
+android-device: android
+	adb install -r platforms/android/build/outputs/apk/android-debug.apk
 
 # Start from scratch - useful before release
 clean:
@@ -40,4 +47,4 @@ clean:
 # Shortcut to clean and rebuild
 rebuild: clean dev
 
-.PHONY: dev clean rebuild xcode android-studio
+.PHONY: dev clean rebuild xcode android android-studio android-device
